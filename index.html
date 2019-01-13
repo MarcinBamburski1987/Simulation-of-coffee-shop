@@ -1,0 +1,117 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Restaurant</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+
+  <link rel="stylesheet" href="./../node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body ng-app="app">
+
+  <div ng-controller="mainController">
+      <div class="container">
+        <div class="row">
+          <div class="col-6">
+            <form>
+              <input class="inputNumberOfClients col-xs-2" type="text" ng-model="howManyClients" placeholder="How many?">
+              <input class="inputSetTime col-xs-2" type="text" ng-model="setTimeOfSim" placeholder="Set time">
+
+              <button class="btn btn-success" ng-click="initClients(howManyClients)">init</button>
+              <button class="btn btn-success" ng-click="deleteClient()">start</button>
+              <button class="btn btn-success" ng-click="stopSim()">stop</button>
+            </form>
+            <br>
+            <div class="row">
+              <div class="col-6">
+                <div ng-repeat="item in listOfClients track by $index" >
+                  <p>
+                    <img class="clientPic" src="img/client.jpg"/> id: {{item}}
+                  </p>
+                </div>
+              </div>
+
+              <div class="col-6">
+                <div ng-repeat="item in listOfCoffees track by $index" >
+                    <p>
+                    {{item}}
+                    <img class="coffeePic" src="img/coffeePic.jpg"/>
+                    </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-6">
+            <h2>Stats</h2>
+            <p> Timer: {{seconds}}<br>
+              Final time: {{endTime}}<br>
+              Number of clients: {{howManyClientsInSim}}<br>
+              Number of clients been served: {{howManyClientsBeenServedSoFar}}<br>
+              Number of clients not been served: {{howManyClientsNotBeenServedSoFar}}<br>
+              Number of all coffees: {{numberOfAllCoffees}}<br>
+              Number of coffees been served: {{howManyCoffeesBeenServedSoFar}}<br>
+              Number of coffees not been served: {{howManyCoffeesNotBeenServedSoFar}}
+            </p>
+
+            <h5>Serving time</h5>
+            <canvas id="servingTimeChart" class="chart chart-bar"
+                    chart-data="dataForChartServingTime" chart-labels="labelsClientId" chart-series="seriesServingTimeChart" chart-options="optionsServingTimeChart">
+            </canvas>
+            <br>
+            <h5>Waiting time</h5>
+            <canvas id="waitingTimeChart" class="chart chart-bar"
+                    chart-data="listOfWaitingTime" chart-labels="labelsClientId" chart-series="seriesWaitingTimeChart" chart-options="optionsWaitingTimeChart">
+            </canvas>
+
+            <br>
+            <h5>Number of coffees for clients </h5>
+            <canvas id="numberOfCoffeesChart" class="chart chart-bar"
+                    chart-data="dataListOfCoffees" chart-labels="labelsClientId" chart-series="seriesNumberOfCoffeesChart" chart-options="optionsNumberOfCoffeesChart">
+            </canvas>
+            <br>
+            <h5>Mean</h5>
+            all coffees: {{meanForAllCoffeeBeenServed}}<br>
+            waiting time: {{meanForWaitingTime}}<br>
+            serving time: {{meanForServingTime}}<br>
+            <h5>Median</h5>
+            all coffees: {{medianForAllCoffeeBeenServed}}<br>
+            waiting time: {{medianForWaitingTime}}<br>
+            serving time: {{medianForServingTime}}<br>
+            <h5>Range</h5>
+            all coffees: {{rangeForAllCoffeeBeenServed}}<br>
+            waiting time: {{rangeForWaitingTime}}<br>
+            serving time: {{rangeForServingTime}}<br>
+            <h5>Mode</h5>
+            all coffees: {{modeForAllCoffeeBeenServed}}<br>
+            waiting time: {{modeForWaitingTime}}<br>
+            serving time: {{modeForServingTime}}<br>
+            <h5>standardDeviation</h5>
+            all coffees: {{standardDeviationForAllCoffeeBeenServed}}<br>
+            waiting time: {{standardDeviationForWaitingTime}}<br>
+            serving time: {{standardDeviationForServingTime}}<br>
+          </div>
+        </div>
+
+      </div>
+
+  </div>
+
+  <script src="./../node_modules/angular/angular.js"></script>
+  <script src="js/main.js"></script>
+  <script src="./../node_modules/chart.js/dist/Chart.min.js"></script>
+  <script src="./../node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+
+</body>
+
+</html>
